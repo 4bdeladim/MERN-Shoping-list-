@@ -12,13 +12,16 @@ import {
 import { connect } from 'react-redux'
 import { addItem } from '../actions/itemActions'
 
+
+
+
 class ItemModal extends Component {
     state = {
         modal: false,
         name: ''
     }
 
-    toogle = () => {
+    toggle = () => {
         this.setState({
             modal: !this.state.modal 
         })
@@ -29,8 +32,14 @@ class ItemModal extends Component {
     }
 
     onSubmit = e => {
-        e.preventDEfault();
-        
+        e.preventDefault();
+        const newItem = {
+            name: this.state.name
+        }
+
+        this.props.addItem(newItem)
+
+        this.toggle()
     }
 
     render() {
@@ -39,15 +48,15 @@ class ItemModal extends Component {
                 <Button
                     color="dark"
                     style={{marginBottom: '2rem'}}
-                    onClick={this.toogle}
+                    onClick={this.toggle}
                 >Add Item</Button>
 
                 <Modal
                     isOpen={this.state.modal}
-                    toogle={this.toogle}
+                    toggle={this.toggle}
                 >
                     <ModalHeader
-                        toogle={this.toogle}
+                        toggle={this.toggle}
                     >
                         Add to ShoppingList
                     </ModalHeader>
@@ -67,8 +76,7 @@ class ItemModal extends Component {
                                     color="dark"
                                     style={{marginTop: '2rem'}}
                                     block
-                                  
-                                    
+                        
                                 >
                                         Add Item
                                 </Button>
@@ -81,5 +89,9 @@ class ItemModal extends Component {
     }
 };
 
+const mapStateToProps = state => ({
+    item: state.item
+})
 
-export default connect()(ItemModal)
+
+export default connect(mapStateToProps, { addItem })(ItemModal)

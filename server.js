@@ -2,15 +2,17 @@ require('dotenv').config()
 
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 2000
 const items = require('./routes/api/items');
 const cors = require('cors')
 const path = require('path')
+const users = require('./routes/api/users');
 
-app.use(bodyParser.json(), cors());
+
+app.use(express.json(), cors());
 app.use('/api/items', items);
+app.use('/api/users', users)
 
 
 
@@ -18,7 +20,7 @@ app.use('/api/items', items);
 //db 
 const db = process.env.URL ;
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => console.log('Connected'))
     .catch((err) => console.log(err))
 

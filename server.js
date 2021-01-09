@@ -8,12 +8,12 @@ const items = require('./routes/api/items');
 const cors = require('cors')
 const path = require('path')
 const users = require('./routes/api/users');
-
+const auth = require('./routes/api/auth')
 
 app.use(express.json(), cors());
 app.use('/api/items', items);
 app.use('/api/users', users)
-
+app.use('/api/auth', auth)
 
 
 
